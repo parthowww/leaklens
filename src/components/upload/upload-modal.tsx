@@ -32,6 +32,7 @@ export function UploadModal({ isOpen, onClose, onSuccess }: UploadModalProps) {
 
   const [step, setStep] = useState<Step>('file-select');
   const [fileName, setFileName] = useState<string>('');
+  const [isSampleData, setIsSampleData] = useState(false);
   const [csvContent, setCsvContent] = useState<string>('');
   const [parseResult, setParseResult] = useState<CSVParseResult | null>(null);
   const [columnMapping, setColumnMapping] = useState<CSVColumnMapping>({
@@ -50,6 +51,7 @@ export function UploadModal({ isOpen, onClose, onSuccess }: UploadModalProps) {
   const handleReset = () => {
     setStep('file-select');
     setFileName('');
+    setIsSampleData(false);
     setCsvContent('');
     setParseResult(null);
     setImportSummary(null);
@@ -61,7 +63,8 @@ export function UploadModal({ isOpen, onClose, onSuccess }: UploadModalProps) {
   };
 
   // Process raw text content from uploaded file or sample
-  const processRawCSV = (content: string, name: string) => {
+  const processRawCSV = (content: string, name: string, isSample = false) => {
+    setIsSampleData(isSample);
     setCsvContent(content);
     setFileName(name);
 
@@ -94,7 +97,7 @@ export function UploadModal({ isOpen, onClose, onSuccess }: UploadModalProps) {
   };
 
   const handleLoadSampleCSV = () => {
-    processRawCSV(DEMO_SAMPLE_CSV, 'agency_expenses_sample.csv');
+    processRawCSV(DEMO_SAMPLE_CSV, 'agency_expenses_sample.csv', true);
   };
 
   const handleMappingChange = (key: keyof CSVColumnMapping, value: string) => {
@@ -119,7 +122,7 @@ export function UploadModal({ isOpen, onClose, onSuccess }: UploadModalProps) {
   const handleConfirmImport = () => {
     if (!parseResult || parseResult.validTransactions.length === 0) return;
 
-    const summary = importTransactions(fileName, parseResult.validTransactions);
+    const summary = importTransactions(fileName, parseResult.validTransactions, isSampleData ? 'sample' : 'user');
     setImportSummary(summary);
     setStep('completed');
   };
@@ -151,9 +154,11 @@ export function UploadModal({ isOpen, onClose, onSuccess }: UploadModalProps) {
       {/* STEP 1: FILE SELECT */}
       {step === 'file-select' && (
         <div className="space-y-6">
-          {isDemoMode && (
+          {(isDemoMode || isSampleData) && (
             <p className="rounded-md border border-[#d9e8df] bg-[#f2f8f3] p-3 text-xs leading-5 text-[#21664f]">
-              Your first CSV import replaces the synthetic sample records, so example and uploaded transactions stay separate.
+              {isSampleData
+                ? 'Loading the sample replaces the current records and marks this workspace as synthetic demo data.'
+                : 'Your first CSV import replaces synthetic sample records, so example and uploaded transactions stay separate.'}
             </p>
           )}
           <div
