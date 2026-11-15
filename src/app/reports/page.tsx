@@ -147,11 +147,10 @@ export default function ReportsPage() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-5">
           <div>
             <h2 className="text-2xl font-bold tracking-tight text-slate-900">
-              Financial Leak Audit Report
+              Expense review report
             </h2>
             <p className="mt-1 text-sm text-slate-500">
-              Executive summary of detected anomalies, recurring commitments, and non-overlapping
-              savings opportunities.
+              Summary of spending, findings awaiting review, recurring commitments and confirmed savings.
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -189,7 +188,7 @@ export default function ReportsPage() {
               <div className="flex items-center gap-2 mb-1">
                 <span className="font-bold text-xl text-slate-900">LeakLens</span>
                 <span className="rounded-md bg-emerald-100 text-emerald-800 text-[10px] font-semibold px-2 py-0.5">
-                  Financial Analysis
+                  Expense review
                 </span>
               </div>
               <p className="text-xs text-slate-500">Generated on {generationTimestamp}</p>
@@ -204,7 +203,7 @@ export default function ReportsPage() {
           {/* Executive Metrics Overview */}
           <div>
             <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3">
-              1. Executive Metrics Summary
+              1. Summary
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
@@ -226,7 +225,7 @@ export default function ReportsPage() {
                 <p className="text-xl font-bold text-emerald-950 mt-1">
                   {formatCurrency(metrics.potentialSavings)}
                 </p>
-                <span className="text-[10px] text-emerald-700">Non-overlapping estimate</span>
+                <span className="text-[10px] text-emerald-700">Estimate · review first</span>
               </div>
 
               <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
@@ -256,7 +255,7 @@ export default function ReportsPage() {
           {/* 2. Detected Issues & Leak Findings Table */}
           <div>
             <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3">
-              2. Detected Findings & Audit Evidence ({findings.length})
+              2. Findings and evidence ({findings.length})
             </h3>
             <div className="overflow-x-auto rounded-lg border border-slate-200">
               <table className="w-full text-left text-xs">
