@@ -27,7 +27,7 @@ interface UploadModalProps {
 type Step = 'file-select' | 'column-mapping' | 'validation-summary' | 'completed';
 
 export function UploadModal({ isOpen, onClose, onSuccess }: UploadModalProps) {
-  const { importTransactions } = useAppStore();
+  const { importTransactions, isDemoMode } = useAppStore();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [step, setStep] = useState<Step>('file-select');
@@ -140,7 +140,7 @@ export function UploadModal({ isOpen, onClose, onSuccess }: UploadModalProps) {
       }
       description={
         step === 'file-select'
-          ? 'Upload your bank or credit card CSV statement to scan for money leaks.'
+          ? 'Choose an expense CSV. LeakLens reads it in this browser; the original file is not kept after you close this dialog.'
           : step === 'column-mapping'
           ? `File: ${fileName} — Ensure your column headers match LeakLens fields.`
           : step === 'validation-summary'
@@ -151,6 +151,11 @@ export function UploadModal({ isOpen, onClose, onSuccess }: UploadModalProps) {
       {/* STEP 1: FILE SELECT */}
       {step === 'file-select' && (
         <div className="space-y-6">
+          {isDemoMode && (
+            <p className="rounded-md border border-[#d9e8df] bg-[#f2f8f3] p-3 text-xs leading-5 text-[#21664f]">
+              Your first CSV import replaces the synthetic sample records, so example and uploaded transactions stay separate.
+            </p>
+          )}
           <div
             onClick={() => fileInputRef.current?.click()}
             className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-slate-300 bg-slate-50/70 p-8 text-center hover:border-emerald-500 hover:bg-emerald-50/30 transition-all cursor-pointer group"
@@ -172,6 +177,9 @@ export function UploadModal({ isOpen, onClose, onSuccess }: UploadModalProps) {
               className="hidden"
             />
           </div>
+          <p className="text-xs leading-5 text-slate-500">
+            Imported transactions, findings and review notes are saved in this browser’s local storage on this device. Browser local storage is not encrypted.
+          </p>
 
           <div className="relative flex items-center justify-center">
             <div className="border-t border-slate-200 w-full" />
