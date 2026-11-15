@@ -110,11 +110,10 @@ export default function LeaksPage() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-5">
           <div>
             <h2 className="text-2xl font-bold tracking-tight text-slate-900">
-              Leak Detection Hub
+              Findings to review
             </h2>
             <p className="mt-1 text-sm text-slate-500">
-              Deterministic, evidence-backed findings to investigate duplicate charges, price hikes,
-              and spending surges.
+              Review possible duplicate charges, price changes and unusual spending. Open a finding to inspect its transaction evidence.
             </p>
           </div>
         </div>
@@ -123,7 +122,7 @@ export default function LeaksPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="rounded-xl border border-emerald-200 bg-emerald-50/50 p-4">
             <span className="text-xs text-emerald-800 font-medium">
-              Potential Savings Opportunity
+              Potential savings · needs review
             </span>
             <p className="mt-1 text-2xl font-bold text-emerald-950">
               {formatCurrency(metrics.potentialSavings)}
@@ -138,14 +137,14 @@ export default function LeaksPage() {
               {formatCurrency(metrics.confirmedSavings)}
             </p>
             <p className="text-[11px] text-slate-500 mt-1">
-              Issues resolved or successfully refunded
+              Marked resolved or refunded
             </p>
           </div>
           <div className="rounded-xl border border-slate-200 bg-white p-4">
             <span className="text-xs text-slate-500 font-medium">Total Flagged Rules</span>
             <p className="mt-1 text-2xl font-bold text-slate-900">{findings.length}</p>
             <p className="text-[11px] text-slate-500 mt-1">
-              Deterministic detection rules triggered
+              Findings identified by the rules
             </p>
           </div>
         </div>
@@ -158,10 +157,10 @@ export default function LeaksPage() {
               <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
               <input
                 type="text"
-                placeholder="Search vendor, finding explanation, or title..."
+                placeholder="Search vendor or finding"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full rounded-lg border border-slate-200 bg-white pl-9 pr-4 py-2 text-xs text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:outline-hidden"
+                aria-label="Search findings by vendor or title" className="w-full rounded-md border border-slate-200 bg-white pl-9 pr-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:outline-hidden"
               />
             </div>
 
