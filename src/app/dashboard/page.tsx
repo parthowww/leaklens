@@ -9,8 +9,7 @@ import {
   Repeat,
   ArrowUpRight,
   ShieldAlert,
-  Calendar,
-  Sparkles,
+  FileSpreadsheet,
   ChevronRight,
   CheckCircle2,
   Upload,
@@ -23,13 +22,11 @@ import { formatCurrency, formatDate } from '@/lib/utils';
 import { ExpenseTrendsChart } from '@/components/dashboard/expense-trends-chart';
 import { CategoryBreakdownChart } from '@/components/dashboard/category-breakdown-chart';
 import { FindingDetailModal } from '@/components/leaks/finding-detail-modal';
-import { UploadModal } from '@/components/upload/upload-modal';
 import { Finding } from '@/types';
 
 export default function DashboardPage() {
   const { workspace, transactions, findings, metrics, isDemoMode, isLoaded } = useAppStore();
   const [selectedFinding, setSelectedFinding] = useState<Finding | null>(null);
-  const [isUploadOpen, setIsUploadOpen] = useState(false);
 
   // Active findings requiring attention (new or investigating)
   const activeFindings = findings.filter(
@@ -58,60 +55,38 @@ export default function DashboardPage() {
         isOpen={Boolean(selectedFinding)}
         onClose={() => setSelectedFinding(null)}
       />
-      <UploadModal isOpen={isUploadOpen} onClose={() => setIsUploadOpen(false)} />
 
       <div className="space-y-6">
         {/* Welcome Section */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200/80 pb-5">
+        <div className="flex flex-col gap-4 border-b border-slate-200/80 pb-5 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h2 className="text-2xl font-bold tracking-tight text-slate-900">
-              Good morning, John
+            <h2 className="text-2xl font-semibold tracking-tight text-slate-900">
+              Expense overview
             </h2>
             <p className="mt-1 text-sm text-slate-500">
-              Here&apos;s what your expenses are telling you for{' '}
-              <span className="font-semibold text-slate-700">{workspace.name}</span>.
+              Review spending patterns and findings in{' '}
+              <span className="font-medium text-slate-700">{workspace.name}</span>.
             </p>
           </div>
-          <div className="flex items-center gap-2.5">
-            <div className="hidden sm:flex items-center gap-1.5 text-xs text-slate-500 bg-white border border-slate-200 px-3 py-1.5 rounded-lg shadow-2xs">
-              <Calendar className="h-3.5 w-3.5 text-slate-400" />
-              <span>Statement Period: Q3-Q4 2026</span>
-            </div>
-            <Button
-              onClick={() => setIsUploadOpen(true)}
-              className="gap-2 bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs"
-            >
-              <Upload className="h-4 w-4" /> Upload Expenses
-            </Button>
+          <div className="hidden items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-2 text-xs text-slate-500 sm:flex">
+            <FileSpreadsheet className="h-3.5 w-3.5 text-slate-400" />
+            <span>{isDemoMode ? 'Synthetic sample data' : `${transactions.length} imported transactions`}</span>
           </div>
         </div>
 
         {/* Demo Mode Notice Banner */}
         {isDemoMode && (
-          <div className="rounded-xl border border-emerald-200 bg-gradient-to-r from-emerald-50/80 to-teal-50/40 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
-            <div className="flex items-start sm:items-center gap-3">
-              <div className="rounded-lg bg-emerald-600/10 p-2 text-emerald-700 shrink-0">
-                <Sparkles className="h-5 w-5" />
+          <div className="rounded-lg border border-emerald-200 bg-emerald-50/50 p-4">
+            <div className="flex items-start gap-3">
+              <div className="rounded-md bg-emerald-100 p-2 text-emerald-700 shrink-0">
+                <FileSpreadsheet className="h-4 w-4" />
               </div>
               <div>
-                <p className="text-sm font-semibold text-emerald-950">
-                  Interactive Demo Mode Active
-                </p>
-                <p className="text-xs text-emerald-800/80 mt-0.5">
-                  Exploring with synthetic agency transactions. All 4 leak detection rules have
-                  identified sample findings for your review.
+                <p className="text-sm font-semibold text-emerald-950">Synthetic sample data</p>
+                <p className="mt-1 text-xs leading-5 text-emerald-800/80">
+                  These example transactions demonstrate the four checks. Your first CSV import replaces them so sample and uploaded records stay separate.
                 </p>
               </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setIsUploadOpen(true)}
-                className="text-xs border-emerald-300 text-emerald-900 hover:bg-emerald-100/50"
-              >
-                Upload Real CSV
-              </Button>
             </div>
           </div>
         )}

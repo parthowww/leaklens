@@ -27,11 +27,12 @@ interface UploadModalProps {
 type Step = 'file-select' | 'column-mapping' | 'validation-summary' | 'completed';
 
 export function UploadModal({ isOpen, onClose, onSuccess }: UploadModalProps) {
-  const { importTransactions } = useAppStore();
+  const { importTransactions, isDemoMode } = useAppStore();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [step, setStep] = useState<Step>('file-select');
   const [fileName, setFileName] = useState<string>('');
+  const [isSampleData, setIsSampleData] = useState(false);
   const [csvContent, setCsvContent] = useState<string>('');
   const [parseResult, setParseResult] = useState<CSVParseResult | null>(null);
   const [columnMapping, setColumnMapping] = useState<CSVColumnMapping>({
@@ -50,6 +51,7 @@ export function UploadModal({ isOpen, onClose, onSuccess }: UploadModalProps) {
   const handleReset = () => {
     setStep('file-select');
     setFileName('');
+    setIsSampleData(false);
     setCsvContent('');
     setParseResult(null);
     setImportSummary(null);
@@ -61,7 +63,8 @@ export function UploadModal({ isOpen, onClose, onSuccess }: UploadModalProps) {
   };
 
   // Process raw text content from uploaded file or sample
-  const processRawCSV = (content: string, name: string) => {
+  const processRawCSV = (content: string, name: string, isSample = false) => {
+    setIsSampleData(isSample);
     setCsvContent(content);
     setFileName(name);
 
@@ -94,7 +97,7 @@ export function UploadModal({ isOpen, onClose, onSuccess }: UploadModalProps) {
   };
 
   const handleLoadSampleCSV = () => {
-    processRawCSV(DEMO_SAMPLE_CSV, 'agency_expenses_sample.csv');
+    processRawCSV(DEMO_SAMPLE_CSV, 'agency_expenses_sample.csv', true);
   };
 
   const handleMappingChange = (key: keyof CSVColumnMapping, value: string) => {
@@ -119,7 +122,7 @@ export function UploadModal({ isOpen, onClose, onSuccess }: UploadModalProps) {
   const handleConfirmImport = () => {
     if (!parseResult || parseResult.validTransactions.length === 0) return;
 
-    const summary = importTransactions(fileName, parseResult.validTransactions);
+    const summary = importTransactions(fileName, parseResult.validTransactions, isSampleData ? 'sample' : 'user');
     setImportSummary(summary);
     setStep('completed');
   };
@@ -140,7 +143,7 @@ export function UploadModal({ isOpen, onClose, onSuccess }: UploadModalProps) {
       }
       description={
         step === 'file-select'
-          ? 'Upload your bank or credit card CSV statement to scan for money leaks.'
+          ? 'Choose an expense CSV. LeakLens reads it in this browser; the original file is not kept after you close this dialog.'
           : step === 'column-mapping'
           ? `File: ${fileName} — Ensure your column headers match LeakLens fields.`
           : step === 'validation-summary'
@@ -151,6 +154,13 @@ export function UploadModal({ isOpen, onClose, onSuccess }: UploadModalProps) {
       {/* STEP 1: FILE SELECT */}
       {step === 'file-select' && (
         <div className="space-y-6">
+          {(isDemoMode || isSampleData) && (
+            <p className="rounded-md border border-[#d9e8df] bg-[#f2f8f3] p-3 text-xs leading-5 text-[#21664f]">
+              {isSampleData
+                ? 'Loading the sample replaces the current records and marks this workspace as synthetic demo data.'
+                : 'Your first CSV import replaces synthetic sample records, so example and uploaded transactions stay separate.'}
+            </p>
+          )}
           <div
             onClick={() => fileInputRef.current?.click()}
             className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-slate-300 bg-slate-50/70 p-8 text-center hover:border-emerald-500 hover:bg-emerald-50/30 transition-all cursor-pointer group"
@@ -172,6 +182,9 @@ export function UploadModal({ isOpen, onClose, onSuccess }: UploadModalProps) {
               className="hidden"
             />
           </div>
+          <p className="text-xs leading-5 text-slate-500">
+            Imported transactions, findings and review notes are saved in this browser’s local storage on this device. Browser local storage is not encrypted.
+          </p>
 
           <div className="relative flex items-center justify-center">
             <div className="border-t border-slate-200 w-full" />

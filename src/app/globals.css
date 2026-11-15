@@ -2,37 +2,43 @@
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
-    --foreground: 222 47% 11%;
+    --background: 40 29% 97%;
+    --foreground: 162 15% 14%;
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 162 15% 14%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-    --primary: 160 84% 39%;
+    --popover-foreground: 162 15% 14%;
+    --primary: 153 51% 26%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222 47% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222 47% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 160 84% 39%;
-    --radius: 0.5rem;
+    --secondary: 60 13% 93%;
+    --secondary-foreground: 162 15% 14%;
+    --muted: 60 13% 93%;
+    --muted-foreground: 150 7% 43%;
+    --accent: 60 13% 93%;
+    --accent-foreground: 162 15% 14%;
+    --destructive: 0 72% 52%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 50 14% 90%;
+    --input: 50 14% 90%;
+    --ring: 153 51% 26%;
+    --radius: 0.375rem;
   }
 }
 
 body {
-  background-color: #f8fafc;
-  color: #0f172a;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: #faf9f6;
+  color: #1f2a27;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* Custom scrollbars */
+:focus-visible {
+  outline: 2px solid #21664f;
+  outline-offset: 2px;
+}
+
+/* Keep scrollbars quiet and consistent with the warm neutral palette. */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -41,9 +47,135 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #d2d4cc;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: #a9afa7;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Shared application palette for screens that still use Tailwind's slate/emerald utilities. */
+[class~="bg-[#F8FAFC]"],
+[class~="bg-slate-50"],
+[class~="bg-slate-50/30"],
+[class~="bg-slate-50/40"],
+[class~="bg-slate-50/50"],
+[class~="bg-slate-50/60"],
+[class~="bg-slate-50/70"] {
+  background-color: #faf9f6;
+}
+[class~="bg-slate-100"] {
+  background-color: #f1f1eb;
+}
+[class~="bg-slate-200"] {
+  background-color: #e5e5df;
+}
+[class~="border-slate-100"],
+[class~="border-slate-150"],
+[class~="border-slate-200"],
+[class~="border-slate-200/80"],
+[class~="border-slate-300"] {
+  border-color: #e5e5df;
+}
+[class~="text-[#0F172A]"],
+[class~="text-slate-900"] {
+  color: #1f2a27;
+}
+[class~="text-slate-800"] {
+  color: #273530;
+}
+[class~="text-slate-700"] {
+  color: #38453f;
+}
+[class~="text-slate-600"] {
+  color: #4f5b55;
+}
+[class~="text-slate-500"] {
+  color: #68716d;
+}
+[class~="text-slate-400"] {
+  color: #77807b;
+}
+[class~="text-slate-300"] {
+  color: #a0a6a2;
+}
+[class~="placeholder-slate-400"]::placeholder {
+  color: #77807b;
+}
+[class~="bg-emerald-600"] {
+  background-color: #21664f;
+}
+[class~="bg-emerald-600/10"],
+[class~="bg-emerald-100"],
+[class~="bg-emerald-100/50"] {
+  background-color: #e6f1e8;
+}
+[class~="bg-emerald-50"],
+[class~="bg-emerald-50/30"],
+[class~="bg-emerald-50/40"],
+[class~="bg-emerald-50/50"],
+[class~="bg-emerald-50/60"],
+[class~="bg-emerald-50/80"] {
+  background-color: #f2f8f3;
+}
+[class~="border-emerald-100"],
+[class~="border-emerald-200"],
+[class~="border-emerald-300"] {
+  border-color: #d9e8df;
+}
+[class~="text-emerald-950"],
+[class~="text-emerald-900"],
+[class~="text-emerald-800"],
+[class~="text-emerald-800/80"],
+[class~="text-emerald-700"],
+[class~="text-emerald-600"] {
+  color: #21664f;
+}
+[class~="text-emerald-900"] {
+  color: #184f3d;
+}
+[class~="hover:bg-slate-100"]:hover {
+  background-color: #f1f1eb;
+}
+[class~="hover:bg-emerald-700"]:hover {
+  background-color: #184f3d;
+}
+[class~="hover:bg-emerald-100/50"]:hover {
+  background-color: #e6f1e8;
+}
+[class~="hover:border-slate-300"]:hover {
+  border-color: #d2d4cc;
+}
+[class~="hover:text-emerald-700"]:hover {
+  color: #184f3d;
+}
+[class~="focus:border-emerald-500"]:focus {
+  border-color: #21664f;
+}
+[class~="bg-gradient-to-r"] {
+  background-image: none;
+  background-color: #f2f8f3;
+}
+main [class~="rounded-xl"] {
+  border-radius: 0.625rem;
+}
+main [class~="rounded-lg"] {
+  border-radius: 0.5rem;
+}
+main [class~="shadow-xs"],
+main [class~="shadow-2xs"],
+main [class~="shadow-md"],
+main [class~="hover:shadow-md"]:hover {
+  box-shadow: none;
 }

@@ -155,6 +155,8 @@ export function AppShell({ children }: AppShellProps) {
                 <Sparkles className="h-3.5 w-3.5 text-emerald-600" /> Interactive Demo
               </span>
               <button
+                type="button"
+                aria-label="Reset sample data"
                 onClick={resetToDemoData}
                 title="Reset sample data"
                 className="text-slate-500 hover:text-emerald-700 transition-colors cursor-pointer"
@@ -181,6 +183,7 @@ export function AppShell({ children }: AppShellProps) {
           </div>
           <Link
             href="/"
+            aria-label="Public landing page"
             className="text-slate-400 hover:text-slate-600 p-1.5 rounded-md hover:bg-slate-100"
             title="Public Landing Page"
           >
@@ -195,6 +198,9 @@ export function AppShell({ children }: AppShellProps) {
         <header className="sticky top-0 z-20 h-16 border-b border-slate-200 bg-white/95 backdrop-blur-xs flex items-center justify-between px-4 sm:px-6">
           <div className="flex items-center gap-3">
             <button
+              type="button"
+              aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              aria-expanded={isMobileMenuOpen}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100"
             >
@@ -211,6 +217,7 @@ export function AppShell({ children }: AppShellProps) {
               <Link
                 href="/leaks"
                 className="relative p-2 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
+                aria-label={`${metrics.issuesToReviewCount} findings to review`}
                 title={`${metrics.issuesToReviewCount} findings to review`}
               >
                 <Bell className="h-5 w-5" />
@@ -232,7 +239,7 @@ export function AppShell({ children }: AppShellProps) {
         {/* Mobile Navigation Drawer */}
         {isMobileMenuOpen && (
           <div className="md:hidden fixed inset-0 z-40 bg-slate-900/30 backdrop-blur-xs">
-            <div className="fixed inset-y-0 left-0 w-64 bg-white shadow-xl p-4 flex flex-col justify-between">
+            <div id="mobile-navigation" className="fixed inset-y-0 left-0 w-64 bg-white shadow-xl p-4 flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between pb-4 border-b border-slate-100">
                   <div className="flex items-center gap-2">
@@ -242,6 +249,8 @@ export function AppShell({ children }: AppShellProps) {
                     <span className="font-bold text-slate-900">LeakLens</span>
                   </div>
                   <button
+                    type="button"
+                    aria-label="Close navigation menu"
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="p-1 rounded-md text-slate-400 hover:bg-slate-100"
                   >
