@@ -156,39 +156,54 @@ export function AppStoreProvider({ children }: { children: React.ReactNode }) {
       filename: string,
       rawTransactions: Omit<Transaction, 'id' | 'workspace_id' | 'import_batch_id' | 'created_at'>[]
     ) => {
+      const importTime = new Date().toISOString();
       const batchId = `batch-${Date.now()}`;
+      const importWorkspace = isDemoMode
+        ? {
+            ...workspace,
+            id: `workspace-${batchId}`,
+            name: workspace.name === DEMO_WORKSPACE.name ? 'My workspace' : workspace.name,
+          }
+        : workspace;
       const newBatch: ImportBatch = {
         id: batchId,
-        workspace_id: workspace.id,
+        workspace_id: importWorkspace.id,
         filename,
         row_count: rawTransactions.length,
         valid_row_count: rawTransactions.length,
         rejected_row_count: 0,
         status: 'completed',
-        imported_at: new Date().toISOString(),
+        imported_at: importTime,
       };
 
       const formattedTxs: Transaction[] = rawTransactions.map((t, idx) => ({
         ...t,
         id: `tx-${Date.now()}-${idx}`,
-        workspace_id: workspace.id,
+        workspace_id: importWorkspace.id,
         import_batch_id: batchId,
-        created_at: new Date().toISOString(),
+        created_at: importTime,
       }));
 
-      const allTxs = [...transactions, ...formattedTxs];
+      // The first real import replaces the synthetic demo rows so sample data
+      // can never be mixed into a customer's ledger or findings.
+      const baseTransactions = isDemoMode ? [] : transactions;
+      const baseFindings = isDemoMode ? [] : findings;
+      const allTxs = [...baseTransactions, ...formattedTxs];
       const { findings: updatedFindings, recurringExpenses: updatedRec } = runDetectionEngine(
         allTxs,
-        findings,
+        baseFindings,
         detectionConfig
       );
 
       const newFindingsCount = updatedFindings.filter((f) => f.review_status === 'new').length;
 
-      setImportBatches((prev) => [newBatch, ...prev]);
+      setWorkspace(importWorkspace);
+      setImportBatches((prev) => (isDemoMode ? [newBatch] : [newBatch, ...prev]));
       setTransactions(allTxs);
       setFindings(updatedFindings);
       setRecurringExpenses(updatedRec);
+      setFindingNotes((prev) => (isDemoMode ? [] : prev));
+      setIsDemoMode(false);
 
       return {
         batchId,
@@ -196,7 +211,7 @@ export function AppStoreProvider({ children }: { children: React.ReactNode }) {
         newFindingsCount,
       };
     },
-    [workspace.id, transactions, findings, detectionConfig]
+    [workspace, isDemoMode, transactions, findings, detectionConfig]
   );
 
   // Update Finding Review Status
