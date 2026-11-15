@@ -91,13 +91,12 @@ export default function SettingsPage() {
       <Modal
         isOpen={isClearModalOpen}
         onClose={() => setIsClearModalOpen(false)}
-        title="Wipe Workspace Transactions"
+        title="Clear Imported Data"
         maxWidth="md"
       >
         <div className="space-y-4">
           <p className="text-xs text-slate-600">
-            Are you sure you want to permanently clear all imported transactions, batches, and
-            findings from this workspace?
+            This clears imported transactions, batches, findings and review notes from this browser. Workspace name, currency and detection thresholds remain saved in this browser’s local storage.
           </p>
           <div className="flex justify-end gap-2 pt-2">
             <Button variant="outline" size="sm" onClick={() => setIsClearModalOpen(false)}>
@@ -111,7 +110,7 @@ export default function SettingsPage() {
                 setIsClearModalOpen(false);
               }}
             >
-              Wipe Everything
+              Clear Imported Data
             </Button>
           </div>
         </div>
@@ -280,9 +279,9 @@ export default function SettingsPage() {
 
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-2">
             <div>
-              <p className="text-xs font-semibold text-rose-700">Wipe All Transactions</p>
+              <p className="text-xs font-semibold text-rose-700">Clear imported data</p>
               <p className="text-[11px] text-slate-500">
-                Permanently clear all ledger records and reset the workspace to an empty slate.
+                Remove imported transactions, import batches, findings, recurring summaries and review notes from this browser. Your workspace name, currency and detection thresholds remain saved.
               </p>
             </div>
             <Button
@@ -291,7 +290,7 @@ export default function SettingsPage() {
               onClick={() => setIsClearModalOpen(true)}
               className="text-xs gap-1.5"
             >
-              <Trash2 className="h-3.5 w-3.5" /> Wipe Workspace Data
+              <Trash2 className="h-3.5 w-3.5" /> Clear Imported Data
             </Button>
           </div>
         </div>
