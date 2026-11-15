@@ -41,7 +41,7 @@ export default function LandingPage() {
             <a className="transition-colors hover:text-[#21664f]" href="#privacy">Data and privacy</a>
           </nav>
           <Link href="/dashboard" className="inline-flex h-10 items-center gap-2 rounded-md bg-[#21664f] px-4 text-sm font-medium text-white transition-colors hover:bg-[#184f3d] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#21664f]">
-            View sample audit <ArrowRight className="h-4 w-4" />
+            Open dashboard <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
       </header>
@@ -60,7 +60,7 @@ export default function LandingPage() {
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
             <Link href="/dashboard" className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-[#21664f] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#184f3d] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#21664f]">
-              Explore the sample audit <ArrowRight className="h-4 w-4" />
+              Open dashboard <ArrowRight className="h-4 w-4" />
             </Link>
             <a href="#how-it-works" className="inline-flex h-12 items-center justify-center rounded-md px-5 text-sm font-medium text-[#46514c] transition-colors hover:bg-[#efeee9]">
               See how it works
@@ -172,9 +172,9 @@ export default function LandingPage() {
             <h2 className="mt-3 max-w-lg text-3xl font-medium tracking-[-0.05em] sm:text-4xl">Your CSV is handled in your browser.</h2>
           </div>
           <ul className="space-y-4 text-sm leading-6 text-[#4f5b55]">
-            <li className="flex gap-3"><ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#21664f]" /><span>The file is read in the browser. You do not need to connect a bank account or share a banking password.</span></li>
-            <li className="flex gap-3"><Check className="mt-0.5 h-4 w-4 shrink-0 text-[#21664f]" /><span>Imported transactions and review notes are saved in this browser’s local storage so they remain after you return.</span></li>
-            <li className="flex gap-3"><Check className="mt-0.5 h-4 w-4 shrink-0 text-[#21664f]" /><span>Remove saved app data from Settings, or clear this site’s browser storage. Use synthetic data if you do not want to store financial records here.</span></li>
+            <li className="flex gap-3"><ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#21664f]" /><span>Your CSV is read and analyzed in the browser. The raw file is not saved after you close the import dialog, and no bank connection is needed.</span></li>
+            <li className="flex gap-3"><Check className="mt-0.5 h-4 w-4 shrink-0 text-[#21664f]" /><span>Imported records and notes persist in this browser/device’s local storage. It is not encrypted, so anyone using this browser profile may be able to access them.</span></li>
+            <li className="flex gap-3"><Check className="mt-0.5 h-4 w-4 shrink-0 text-[#21664f]" /><span>Settings can clear imported transactions, findings and review notes. Workspace details and detection thresholds remain saved in local storage. Use synthetic examples if you do not want to keep financial records in this browser.</span></li>
           </ul>
         </div>
       </section>
@@ -184,11 +184,11 @@ export default function LandingPage() {
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.13em] text-[#21664f]">Ready when you are</p>
             <h2 className="mt-3 text-2xl font-medium tracking-[-0.045em] sm:text-3xl">See what a good review looks like.</h2>
-            <p className="mt-3 max-w-xl text-sm leading-6 text-[#68716d]">Explore the sample audit first, then upload an expense CSV from your dashboard if you choose.</p>
+            <p className="mt-3 max-w-xl text-sm leading-6 text-[#68716d]">Open your dashboard to view saved findings or start a CSV import. On a first visit, the dashboard opens with synthetic examples.</p>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-            <Link href="/dashboard" className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-[#21664f] px-4 text-sm font-semibold text-white transition-colors hover:bg-[#184f3d] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#21664f]">Open sample audit <ArrowRight className="h-4 w-4" /></Link>
-            <Link href="/dashboard" className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-[#dcded8] px-4 text-sm font-medium text-[#46514c] transition-colors hover:bg-[#f7f7f2]"><Upload className="h-4 w-4" /> Go to dashboard</Link>
+            <Link href="/dashboard" className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-[#21664f] px-4 text-sm font-semibold text-white transition-colors hover:bg-[#184f3d] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#21664f]">Open dashboard <ArrowRight className="h-4 w-4" /></Link>
+            <a href="#privacy" className="inline-flex h-11 items-center justify-center rounded-md border border-[#dcded8] px-4 text-sm font-medium text-[#46514c] transition-colors hover:bg-[#f7f7f2]">Data and privacy</a>
           </div>
         </div>
       </section>
@@ -202,7 +202,7 @@ export default function LandingPage() {
           </Link>
           <p>Example figures use synthetic transactions. Review findings before taking action.</p>
           <nav aria-label="Footer navigation" className="flex gap-5">
-            <Link className="hover:text-[#21664f]" href="/dashboard">Sample audit</Link>
+            <Link className="hover:text-[#21664f]" href="/dashboard">Dashboard</Link>
             <a className="hover:text-[#21664f]" href="#privacy">Data and privacy</a>
           </nav>
         </div>
